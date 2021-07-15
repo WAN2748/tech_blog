@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
         },
       ]
     })
-      .then(dbPostData => res.json(dbPostData))
+      .then(postData => res.json(postData))
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -62,12 +62,12 @@ router.get('/', (req, res) => {
         }
       ]
     })
-      .then(dbPostData => {
-        if (!dbPostData) {
+      .then(postData => {
+        if (!postData) {
           res.status(404).json({ message: 'There are no posts found for this ID!' });
           return;
         }
-        res.json(dbPostData);
+        res.json(postData);
       })
       .catch(err => {
         console.log(err);
@@ -81,7 +81,7 @@ router.post('/', withAuth, (req, res) => {
       post_content: req.body.post_content,
       user_id: req.session.user_id
     })
-      .then(dbPostData => res.json(dbPostData))
+      .then(postData => res.json(postData))
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -98,12 +98,12 @@ router.put('/:id', withAuth, (req, res) => {
           id: req.params.id
         }
       })
-      .then(dbPostData => {
-        if (!dbPostData) {
+      .then(postData => {
+        if (!postData) {
           res.status(404).json({ message: 'There are no posts found for this ID!' });
           return;
         }
-        res.json(dbPostData);
+        res.json(postData);
       })
       .catch(err => {
         console.log(err);
@@ -117,12 +117,12 @@ router.put('/:id', withAuth, (req, res) => {
         id: req.params.id
       }
     })
-      .then(dbPostData => {
-        if (!dbPostData) {
+      .then(postData => {
+        if (!postData) {
           res.status(404).json({ message: 'There are no posts found for this ID!' });
           return;
         }
-        res.json(dbPostData);
+        res.json(postData);
       })
       .catch(err => {
         console.log(err);

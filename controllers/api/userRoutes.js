@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
         User.findAll({
         attributes: { exclude: ['password'] }
     })
-      .then(dbUserData => res.json(dbUserData))
+      .then(userData => res.json(userData))
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -36,12 +36,12 @@ router.get('/:id', (req, res) => {
           ]
 
     })
-      .then(dbUserData => {
-        if (!dbUserData) {
+      .then(userData => {
+        if (!userData) {
           res.status(404).json({ message: 'There are no posts found for this ID!' });
           return;
         }
-        res.json(dbUserData);
+        res.json(userData);
       })
       .catch(err => {
         console.log(err);
@@ -55,16 +55,16 @@ router.post('/', (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      github: req.body.github
+      github: req.body.github,
     })
-    .then(dbUserData => {
+    .then(userData => {
       req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.github = dbUserData.github;
+        req.session.user_id = userData.id;
+        req.session.username = userData.username;
+        req.session.github = userData.github;
         req.session.loggedIn = true;
     
-        res.json(dbUserData);
+        res.json(userData);
       });
     });
   });
@@ -75,13 +75,13 @@ router.post('/', (req, res) => {
       where: {
         email: req.body.email
       }
-    }).then(dbUserData => {
-      if (!dbUserData) {
+    }).then(userData => {
+      if (!userData) {
         res.status(400).json({ message: 'There are no users with the specified email address!' });
         return;
       }
   
-      const validPassword = dbUserData.checkPassword(req.body.password);
+      const validPassword = userData.checkPassword(req.body.password);
   
       if (!validPassword) {
         res.status(400).json({ message: 'Password is incorrect!' });
@@ -90,12 +90,12 @@ router.post('/', (req, res) => {
   
       req.session.save(() => {
         
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.github = dbUserData.github;
+        req.session.user_id = userData.id;
+        req.session.username = userData.username;
+        req.session.github = userData.github;
         req.session.loggedIn = true;
   
-        res.json({ user: dbUserData, message: 'You have successfully logged in!' });
+        res.json({ user: userData, message: 'You have successfully logged in!' });
       });
     });
   });
@@ -120,12 +120,12 @@ router.put('/:id', withAuth, (req, res) => {
             id: req.params.id
       }
     })
-      .then(dbUserData => {
-        if (!dbUserData[0]) {
+      .then(userData => {
+        if (!userData[0]) {
           res.status(404).json({ message: 'There are no users found with this ID!' });
           return;
         }
-        res.json(dbUserData);
+        res.json(userData);
       })
       .catch(err => {
         console.log(err);
@@ -140,12 +140,12 @@ router.delete('/:id', withAuth, (req, res) => {
         id: req.params.id
       }
     })
-      .then(dbUserData => {
-        if (!dbUserData) {
+      .then(userData => {
+        if (!userData) {
           res.status(404).json({ message: 'There are no users found with this ID!' });
           return;
         }
-        res.json(dbUserData);
+        res.json(userData);
       })
       .catch(err => {
         console.log(err);
