@@ -38,11 +38,11 @@ app.use(routes);
 
 
 
-/*sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
-*/
-app.listen(PORT, () => {
+
+/*app.listen(PORT, () => {
   console.log('Now listening');
   sequelize.sync({ force: false })
-});
+});*/
