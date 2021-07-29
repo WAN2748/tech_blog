@@ -38,7 +38,7 @@
   textarea, input {
     padding: .5%;
     border-radius: 5px;
-    border: 3px solid rgb(9, 13, 255);
+    border: 3px solid rgb(25, 88, 19);
   }
   
   textarea:focus, input:focus {
@@ -87,7 +87,7 @@
     padding: 0;
     cursor: pointer;
     text-decoration: none;
-    color: #2224a3;
+    color: rgb(25, 88, 19);
     font-size: 100%;
     font-weight: bold;
     transition: color .1s;

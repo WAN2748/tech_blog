@@ -93,7 +93,7 @@ router.get('/LOGIN', (req, res) => {
           const post = dbPostData.get({ plain: true });
   
         
-        res.render('single-post', {
+        res.render('singlePost', {
             post,
             loggedIn: req.session.loggedIn
           });

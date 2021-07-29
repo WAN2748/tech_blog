@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const sequelize = require('../config/connection');
+
 const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
@@ -20,12 +20,12 @@ router.get('/', withAuth, (req, res) => {
           attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
           include: {
             model: User,
-            attributes: ['user']
+            attributes: ['username']
           }
         },
         {
           model: User,
-          attributes: ['user']
+          attributes: ['username']
         }
       ]
     })
@@ -56,12 +56,12 @@ router.get('/', withAuth, (req, res) => {
           attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
           include: {
             model: User,
-            attributes: ['user']
+            attributes: ['username']
           }
         },
         {
           model: User,
-          attributes: ['user']
+          attributes: ['username']
         }
       ]
     })
@@ -72,7 +72,7 @@ router.get('/', withAuth, (req, res) => {
         }
         const post = dbPostData.get({ plain: true });
 
-        res.render('edit-post', {
+        res.render('editPost', {
             post,
             loggedIn: true
             });
@@ -100,18 +100,18 @@ router.get('/create/', withAuth, (req, res) => {
           attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
           include: {
             model: User,
-            attributes: ['user']
+            attributes: ['username']
           }
         },
         {
           model: User,
-          attributes: ['user']
+          attributes: ['username']
         }
       ]
     })
       .then(dbPostData => {
         const posts = dbPostData.map(post => post.get({ plain: true }));
-        res.render('create-post', { posts, loggedIn: true });
+        res.render('addPost', { posts, loggedIn: true });
       })
       .catch(err => {
         console.log(err);
